@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+model User {
+  id            String    @id @default(cuid()) // ID único do usuário
+  username      String    @unique // Nome de usuário único
+  name          String?   // Nome do usuário
+  lastName      String?   // Sobrenome do usuário
+  email         String    @unique // Email único do usuário
+  password      String    // Senha criptografada
+  image         String?   // URL da imagem de perfil (opcional)
+  createdAt     DateTime  @default(now()) // Data de criação do usuário
+  updatedAt     DateTime  @updatedAt // Data da última atualização
+  resetToken    String?   // Token de redefinição de senha (opcional)
+  resetTokenExpiresAt DateTime? // Data de expiração do token de redefinição de senha (opcional)
+  accounts      Account[] // Relação com a tabela de contas (para autenticação externa)
+  sessions      Session[] // Relação com a tabela de sessões
+  tokens        Token[]   // Relação com a tabela de tokens
+  books         Book[]    // Relação com a tabela de livros
+
+  @@map("users") // Nome da tabela no banco de dados
+}
+
+model Token {
+  id          String   @id @default(cuid()) // ID único do token
+  token       String   @unique // Token de autenticação (JWT ou outro)
+  type        String   // Tipo de token (ex: "access", "refresh")
+  expiresAt   DateTime // Data de expiração do token
+  userId      String   // ID do usuário associado ao token
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade) // Relação com o usuário
+
+  @@map("tokens") // Nome da tabela no banco de dados
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Book {
+  id            String   @id @default(cuid()) // ID único do livro
+  title         String   // Título do livro
+  author        String   // Autor do livro
+  description   String?  // Descrição do livro (opcional)
+  publishedDate DateTime // Data de publicação do livro
+  isbn          String   @unique // ISBN único do livro
+  createdAt     DateTime @default(now()) // Data de criação do livro
+  updatedAt     DateTime @updatedAt // Data da última atualização
+  userId        String   // ID do usuário que cadastrou o livro
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade) // Relação com o usuário
+  priority      String?  // Prioridade do livro (ex: "alta", "média", "baixa")
+  rating        Int?     // Avaliação do livro (ex: 1 a 5)
+  image         String?  // URL da imagem da capa do livro
+  genre         Json?    // Gênero do livro (ex: ["Ficção", "Fantasia", "Aventura"])
+  pages         Int?     // Número de páginas do livro
+  language      String?  // Idioma do livro (ex: "Português", "Inglês")
+  publisher     String?  // Editora do livro
+  status        String?  // Status do livro (ex: "Lido", "Para Ler", "Lendo")
+  startDate     DateTime? // Data de início da leitura (opcional)
+  endDate       DateTime? // Data de término da leitura (opcional)
+  notes         String?  // Anotações sobre o livro (opcional)
+  daysToRead    Int?     // Quantidade de dias para ler o livro (opcional)
+  progress      Int?     // Progresso da leitura (ex: 50 para 50%)
+  currentPages  Int?     // Página atual em que o usuário está
+
+  @@map("books") // Nome da tabela no banco de dados
+}
