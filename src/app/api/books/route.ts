@@ -111,10 +111,8 @@ export async function POST(request: Request) {
     }
 }
 
-export async function GET(request: Request) {
+export async function GET() {
     const session = await getServerSession(authOptions);
-
-    // Verifica se o usuário está autenticado
     if (!session?.user) {
         return NextResponse.json(
             { success: false, message: "Não autorizado." },

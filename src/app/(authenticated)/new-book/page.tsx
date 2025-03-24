@@ -245,7 +245,7 @@ export default function NewBookForm() {
                     <FormField
                         control={form.control}
                         name="publishedDate"
-                        render={({ field }) => (
+                        render={() => (
                             <FormItem>
                                 <FormLabel>Data de Publicação</FormLabel>
                                 <FormControl>
@@ -349,7 +349,7 @@ export default function NewBookForm() {
                     <FormField
                         control={form.control}
                         name="genre"
-                        render={({ field }) => (
+                        render={({}) => (
                             <FormItem>
                                 <FormControl>
                                     <FormField

@@ -68,7 +68,7 @@ export default function RegisterForm() {
                 }, 2000); // Redireciona após 2 segundos
             }
 
-        } catch (error: any) {
+        } catch (error) {
             if (axios.isAxiosError(error)) {
                 setMessage({
                     success: false,

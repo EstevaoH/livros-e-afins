@@ -45,7 +45,7 @@ export async function POST(request: Request) {
         const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
 
         // Envia o e-mail de redefinição
-        const { data, error } = await resend.emails.send({
+        const { error } = await resend.emails.send({
             from: 'Acme <onboarding@resend.dev>',
             to: [user.email],
             subject: 'Redefinição de Senha',

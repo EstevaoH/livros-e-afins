@@ -1,6 +1,6 @@
 'use client';
 
-import { ThemeProvider, useTheme } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
 import { usePathname } from 'next/navigation';
 
 export default function ThemeWrapper({ children }: { children: React.ReactNode }) {

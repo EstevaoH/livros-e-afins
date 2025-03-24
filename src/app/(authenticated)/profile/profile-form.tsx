@@ -87,11 +87,13 @@ export default function ProfileForm() {
 
             setMessage({ success: true, message: "Perfil atualizado com sucesso." });
         } catch (error: any) {
-            console.error(error);
-            setMessage({
-                success: false,
-                message: error.response?.data?.message || "Erro ao atualizar perfil. Tente novamente.",
-            });
+            if (axios.isAxiosError(error)) {
+                setMessage({
+                    success: false,
+                    message: error.response?.data?.message || "Erro ao atualizar perfil. Tente novamente.",
+                });
+            }
+
         } finally {
             setIsLoading(false);
         }

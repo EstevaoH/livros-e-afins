@@ -2,18 +2,14 @@
 import ProfileForm from "./profile-form";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTheme } from "next-themes";
 import { Security } from "./security";
 import { Preferences } from "./preferences";
 import { DeleteAccount } from "./delete-account";
 
 export default function ProfilePage() {
-    const searchParams = useSearchParams();
-    const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-    const [userTheme, setUserTheme] = useState("");
     const { theme, setTheme } = useTheme();
-    const id = searchParams.get("id");
 
 
     return (

@@ -38,7 +38,7 @@ export function ResetPasswordForm() {
             }
             setMessage({ success: true, message: "Senha redefinida com sucesso!" });
             form.reset();
-        } catch (error: any) {
+        } catch (error) {
             if (axios.isAxiosError(error)) {
                 setMessage({
                     success: false,

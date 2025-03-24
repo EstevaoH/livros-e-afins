@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { AlertMessage } from "@/components/alertMessage";
 import { forgotPasswrodInputs, forgotPasswrodSchema } from "./schema";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 export function ForgotPasswordForm() {
     const [message, setMessage] = useState<{ success: boolean; message: string } | null>(null);

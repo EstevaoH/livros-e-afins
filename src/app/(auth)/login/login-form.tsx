@@ -45,7 +45,7 @@ export function LoginForm() {
                 }
             }
             router.push("/dashboard");
-        } catch (error: any) {
+        } catch (error) {
             if (axios.isAxiosError(error)) {
                 setMessage({
                     success: false,
