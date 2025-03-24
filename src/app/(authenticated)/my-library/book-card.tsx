@@ -264,6 +264,7 @@ export default function BookCard({ book, onStartReading }: BookCardProps) {
             const response = await axios.put(`/api/books/progress?id=${bookId}`, {
                 status: "read",
                 endDate: new Date(),
+                startDate: book.startDate,
                 progress: book.progress,
                 currcurrentPages: book.pages
             });

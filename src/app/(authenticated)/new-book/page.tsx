@@ -176,8 +176,8 @@ export default function NewBookForm() {
                         control={form.control}
                         name="isbn"
                         render={({ field }) => {
-                            const isbnValue = field.value; // Obtém o valor atual do campo ISBN
-                            const isButtonDisabled = !isbnValue || isFetching; // Desabilita o botão se o campo estiver vazio ou se estiver buscando
+                            const isbnValue = field.value;
+                            const isButtonDisabled = !isbnValue || isFetching;
 
                             return (
                                 <FormItem className="flex-1">
@@ -194,7 +194,7 @@ export default function NewBookForm() {
                                                 fetchBookData(form.getValues("isbn"));
                                             }
                                         }}
-                                        disabled={isButtonDisabled} // Desabilita o botão se o campo estiver vazio ou se estiver buscando
+                                        disabled={isButtonDisabled}
                                         className=""
                                     >
                                         {isFetching ? "Buscando..." : "Buscar"}

@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import '@smastrom/react-rating/style.css'
 import { Toaster } from "@/components/ui/sonner";
+import Footer from "@/components/footer";
 
 export default async function RootLayout({
     children,
@@ -32,6 +33,7 @@ export default async function RootLayout({
                 </main>
                 <Toaster />
             </div>
+            <Footer />
         </ThemeProvider>
     )
 }

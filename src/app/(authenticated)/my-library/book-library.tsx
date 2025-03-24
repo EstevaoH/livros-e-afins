@@ -104,16 +104,16 @@ export default function BookLibrary() {
     return (
         <div>
             <Tabs defaultValue="read" onValueChange={(value: any) => setActiveTab(value)}>
-                <TabsList className="grid w-full grid-cols-3 mb-8">
-                    <TabsTrigger value="read" className="flex items-center gap-2">
+                <TabsList className="grid w-full grid-cols-3 mb-8 gap-7">
+                    <TabsTrigger value="read" className="flex items-center gap-1">
                         <CheckCircle2 className="h-4 w-4" />
                         <span>Lidos ({readCount})</span>
                     </TabsTrigger>
-                    <TabsTrigger value="reading" className="flex items-center gap-2">
+                    <TabsTrigger value="reading" className="flex items-center gap-1">
                         <BookOpen className="h-4 w-4" />
                         <span>Lendo ({readingCount})</span>
                     </TabsTrigger>
-                    <TabsTrigger value="to-read" className="flex items-center gap-2">
+                    <TabsTrigger value="to-read" className="flex items-center gap-1">
                         <BookMarked className="h-4 w-4" />
                         <span>Quero ler ({toReadCount})</span>
                     </TabsTrigger>
