@@ -26,7 +26,7 @@ export function ChangePasswordModal() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ success: boolean; message: string } | null>(null);
-    const  searchParams = useSearchParams()
+    const searchParams = useSearchParams()
     const id = searchParams.get('id');
 
     const form = useForm<changePasswordInputs>({
@@ -62,12 +62,14 @@ export function ChangePasswordModal() {
                 setOpen(false);
                 setMessage(null);
             }, 2000);
-        } catch (error: any) {
-            console.error(error);
-            setMessage({
-                success: false,
-                message: error.response?.data?.message || "Erro ao alterar a senha. Tente novamente.",
-            });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setMessage({
+                    success: false,
+                    message: error.response?.data?.message || "Erro ao alterar a senha. Tente novamente.",
+                });
+            }
+
         } finally {
             setIsLoading(false);
         }

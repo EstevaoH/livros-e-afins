@@ -10,6 +10,7 @@ import { AlertMessage } from "@/components/alertMessage";
 import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from 'react'
 
 export function ResetPasswordForm() {
     const [message, setMessage] = useState<{ success: boolean; message: string } | null>(null);
@@ -52,7 +53,7 @@ export function ResetPasswordForm() {
     };
 
     return (
-        <>
+        <Suspense>
             {message && (
                 <AlertMessage
                     success={message.success}
@@ -100,6 +101,6 @@ export function ResetPasswordForm() {
                     </Button>
                 </form>
             </Form>
-        </>
+        </Suspense>
     );
 }

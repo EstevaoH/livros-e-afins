@@ -53,12 +53,14 @@ export default function ConfirmDeactivationModal() {
             setTimeout(() => {
                 signOut({ callbackUrl: "/" });
             }, 2000);
-        } catch (error: any) {
-            console.error(error);
-            setMessage({
-                success: false,
-                message: error.response?.data?.message || "Erro ao desativar a conta. Tente novamente.",
-            });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setMessage({
+                    success: false,
+                    message: error.response?.data?.message || "Erro ao desativar a conta. Tente novamente.",
+                });
+            }
+
         } finally {
             setIsLoading(false);
         }
