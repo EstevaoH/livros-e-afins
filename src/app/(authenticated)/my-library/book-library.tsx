@@ -32,7 +32,6 @@ export default function BookLibrary() {
                 }
 
                 const data = await response.json();
-                console.log(data)
                 setLibraryBooks(data.books);
             } catch (error: any) {
                 setError(error.message);

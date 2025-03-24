@@ -40,10 +40,8 @@ export default function Footer() {
                         </Link>
                     </div>
                 </div>
-
-                {/* Direitos autorais */}
                 <div className="text-center sm:text-left mt-4 text-sm text-gray-600 dark:text-gray-400">
-                    &copy; {new Date().getFullYear()} Seu Nome. Todos os direitos reservados.
+                    &copy; {new Date().getFullYear()} Estevão Ferreira. Todos os direitos reservados.
                 </div>
             </div>
         </footer>

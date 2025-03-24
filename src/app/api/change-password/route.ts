@@ -6,7 +6,7 @@ export async function PUT(request: Request) {
     const { currentPassword, newPassword, confirmPassword } = await request.json();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    console.log(id)
+
     if (!id || typeof id !== 'string') {
         return NextResponse.json({ message: 'ID do usuário inválido.' }, { status: 400 });
     }

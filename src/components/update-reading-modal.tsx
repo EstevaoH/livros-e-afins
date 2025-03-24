@@ -28,7 +28,12 @@ export default function UpdateReadingModal({ book, onUpdateProgress }: { book: B
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant="outline">Atualizar progresso</Button>
+                {
+                    book.status === "reading" && book.progress! < 100 && (
+                        <Button variant="outline">Atualizar progresso</Button>
+                    )
+                }
+
             </PopoverTrigger>
             <PopoverContent className="w-72">
                 <Form {...form}>
@@ -52,6 +57,7 @@ export default function UpdateReadingModal({ book, onUpdateProgress }: { book: B
                                 </FormItem>
                             )}
                         />
+
                         <Button type="submit" className="w-full">
                             Atualizar progresso
                         </Button>

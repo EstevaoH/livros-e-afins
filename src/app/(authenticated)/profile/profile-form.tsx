@@ -54,13 +54,11 @@ export default function ProfileForm() {
 
             setIsLoading(true);
             await axios.get(`/api/profile?id=${id}`).then((response) => {
-                console.log(response.data)
                 if (response.data) {
                     handleSetData(response.data)
                 }
             })
                 .catch((error) => {
-                    console.log(error)
                     setMessage({
                         success: false,
                         message: error.response?.data?.message || "Erro ao carregar perfil.",

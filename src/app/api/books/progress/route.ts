@@ -61,8 +61,6 @@ export async function PUT(request: Request) {
             { status: 201 }
         );
     } catch (error) {
-        console.error("Erro ao atualizar o livro:", error);
-        console.log("Erro ao atualizar o livro:", error);
         return NextResponse.json(
             { success: false, message: "Erro ao atualizar o livro." },
             { status: 500 }

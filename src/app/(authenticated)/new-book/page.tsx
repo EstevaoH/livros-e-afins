@@ -18,6 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import Image from "next/image";
 import { Rating } from '@smastrom/react-rating'
 import MultiSelect from 'react-select'
+import { useRouter } from "next/navigation";
 
 const genres = [
     { value: "Fantasy", label: "Fantasia" },
@@ -62,6 +63,7 @@ export default function NewBookForm() {
     const [isFetching, setIsFetching] = useState(false);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [rating, setRating] = useState(3);
+    const router = useRouter()
 
     const form = useForm<BookInputs>({
         resolver: zodResolver(bookSchema),
@@ -90,7 +92,6 @@ export default function NewBookForm() {
             const basicData = basicResponse.data;
 
             const apiGenres = basicData.subjects || [];
-            console.log(apiGenres)
             const mappedGenres = apiGenres.map((genre: string) => ({
                 value: genre,
                 label: genre,
@@ -124,14 +125,14 @@ export default function NewBookForm() {
                 },
             });
 
-            if (response.status !== 201) {
+            if (response.status >= 400) {
                 throw new Error("Erro ao cadastrar o livro.");
             }
 
             setMessage({ success: true, message: "Livro cadastrado com sucesso!" });
             form.reset();
+            router.push('/my-library')
         } catch (error: any) {
-            console.error(error);
             setMessage({
                 success: false,
                 message: error.response?.data?.message || "Erro ao cadastrar o livro. Tente novamente.",
@@ -349,7 +350,7 @@ export default function NewBookForm() {
                     <FormField
                         control={form.control}
                         name="genre"
-                        render={({}) => (
+                        render={({ }) => (
                             <FormItem>
                                 <FormControl>
                                     <FormField

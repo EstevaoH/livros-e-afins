@@ -16,7 +16,6 @@ interface BookCardProps {
 }
 
 export default function BookCard({ book, onStartReading }: BookCardProps) {
-    console.log(onStartReading)
     const [libraryBooks, setLibraryBooks] = useState<Book[]>([]);
     const renderMyRating = () => {
         const stars = []
@@ -188,11 +187,11 @@ export default function BookCard({ book, onStartReading }: BookCardProps) {
     const getActionButton = () => {
         switch (book.status) {
             case "read":
-                return <button className="text-sm font-medium text-primary hover:underline hover:cursor-pointer">Ver detalhes</button>
+                return <Button onClick={() => onStartReading(book)} type="submit" variant={"outline"} className="w-full">Ver detalhes</Button>
             case "reading":
                 return <UpdateReadingModal book={book} onUpdateProgress={handleUpdateProgress} />
             case "to-read":
-                return <button onClick={() => onStartReading(book)} className="text-sm font-medium text-primary hover:underline hover:cursor-pointer">Começar a ler</button>
+                return <Button onClick={() => onStartReading(book)} type="submit" variant={"outline"} className="w-full"> Começar a ler </Button>
             default:
                 return null
         }
@@ -321,23 +320,7 @@ export default function BookCard({ book, onStartReading }: BookCardProps) {
 
                 {renderStatusContent()}
 
-
-                {
-                    book.status === "reading" && book.progress === 100 && (
-                        <div className="text-sm text-muted-foreground w-full flex justify-center items-center">
-                            <p
-                                className="inline-block transition-all duration-200 hover:text-red-400 hover:underline cursor-pointer"
-                                onClick={() => handleFinishReading(book.id)}
-                            >
-                                Finalizar leitura
-                            </p>
-                        </div>
-                    )
-                }
-            </CardContent>
-
-            <CardFooter className="p-4 grid gap-2 items-start border-t mt-auto">
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-2 flex-wrap mt-4">
                     {Array.isArray(book.genre) && book.genre.map((genre, index) => (
                         <span
                             key={index}
@@ -348,6 +331,14 @@ export default function BookCard({ book, onStartReading }: BookCardProps) {
                     ))}
 
                 </div>
+            </CardContent>
+
+            <CardFooter className="p-4 grid gap-2 items-start border-t mt-auto">
+                {
+                    book.status === "reading" && book.progress === 100 && (
+                        <Button type="submit" variant={"outline"} className="w-full cursor-pointer"> Finalizar leitura </Button>
+                    )
+                }
                 {getActionButton()}
             </CardFooter>
         </Card>

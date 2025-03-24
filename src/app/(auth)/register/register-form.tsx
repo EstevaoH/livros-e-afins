@@ -58,14 +58,13 @@ export default function RegisterForm() {
             }
 
             const result = await response.data;
-            console.log(result);
             if (result.user) {
                 setMessage({ success: true, message: "Usuário cadastrado com sucesso. Efetue seu login para continuar." });
                 form.reset();
                 setTimeout(() => {
                     router.push("/login");
                     setMessage(null);
-                }, 2000); // Redireciona após 2 segundos
+                }, 2000);
             }
 
         } catch (error) {

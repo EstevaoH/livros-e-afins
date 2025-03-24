@@ -35,7 +35,6 @@ export function LoginForm() {
                 password: data.password,
                 redirect: false,
             });
-            console.log(response)
             if (response?.error) {
                 if (response.error === 'CredentialsSignin') {
                     return setMessage({

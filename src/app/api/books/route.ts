@@ -71,7 +71,7 @@ export async function POST(request: Request) {
             progressCurrent = 100;
             currentPage = pages
         } else {
-            currentPage = null
+            currentPage = currentPages
         }
         const book = await db.book.create({
             data: {
@@ -121,14 +121,12 @@ export async function GET() {
     }
 
     try {
-        // Busca todos os livros do usuário no banco de dados
         const books = await db.book.findMany({
             where: {
-                userId: session.user.id, // Filtra os livros pelo ID do usuário
+                userId: session.user.id,
             },
         });
 
-        // Retorna os livros encontrados
         return NextResponse.json(
             { success: true, books },
             { status: 200 }
@@ -146,7 +144,6 @@ export async function PUT(request: Request) {
     const session = await getServerSession(authOptions);
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    // Verifica se o usuário está autenticado
     if (!session?.user) {
         return NextResponse.json(
             { success: false, message: "Não autorizado." },
@@ -154,7 +151,7 @@ export async function PUT(request: Request) {
         );
     }
     const { status, startDate, currentPages, pages, progress } = await request.json();
-    console.log(status, startDate, currentPages, pages, progress)
+
     try {
 
         if (!status || !startDate || !pages) {
@@ -182,16 +179,13 @@ export async function PUT(request: Request) {
             },
         });
 
-        // request.status(200).json(updatedBook);
         return NextResponse.json(
             { success: true, message: "Livro cadastrado com sucesso.", updatedBook },
             { status: 201 }
         );
     } catch (error) {
-        console.error("Erro ao atualizar o livro1:", error);
-        console.log("Erro ao atualizar o livro2:", error);
         return NextResponse.json(
-            { success: false, message: "Erro ao atualizar o livro3." },
+            { success: false, message: "Erro ao atualizar o livro." },
             { status: 500 }
         );
     }

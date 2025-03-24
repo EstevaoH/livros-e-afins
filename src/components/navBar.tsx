@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import Image from "next/image"
 import Link from 'next/link';
 import {
   DropdownMenu,
@@ -16,6 +17,7 @@ import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import Logo from "../../public/logo.png"
 
 export default function Navbar({ userName, id }: { userName: string | null | undefined, id: string | null | undefined }) {
   const pathname = usePathname();
@@ -25,8 +27,8 @@ export default function Navbar({ userName, id }: { userName: string | null | und
     <header className="bg-gray-50 shadow-sm dark:bg-neutral-950 dark:border-b dark:shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <div className="flex items-center">
-          <Link href="/" className="text-gray-700 hover:text-gray-900">
-            {/* <Logo /> */}
+          <Link href="/my-library" className="text-gray-700 hover:text-gray-900">
+            <Image src={Logo} alt='' width={200} height={200} />
           </Link>
         </div>
 
@@ -45,7 +47,7 @@ export default function Navbar({ userName, id }: { userName: string | null | und
                 <Button
                   variant={'link'}
                   className={cn(
-                    pathname === `/my-library` ? 'underline' : ''
+                    pathname === `/my-library` ? 'underline cursor-pointer' : 'cursor-pointer'
                   )}
                 >
                   Minha Biblioteca
@@ -54,19 +56,20 @@ export default function Navbar({ userName, id }: { userName: string | null | und
               <Link href="/new-book" className="text-gray-700 hover:text-gray-900">
                 <Button
                   variant={'link'}
-                  className={cn(pathname === '/new-book' ? 'underline' : '')}
+                  className={cn(pathname === '/new-book' ? 'underline cursor-pointer' : 'cursor-pointer')}
                 >
                   Adicionar Novo Livro
                 </Button>
               </Link>
-              <Link href="/dashboard" className="text-gray-700 hover:text-gray-900">
+              <Link href="/dashboard" className="text-gray-700 hover:text-gray-900 cursor-pointer">
                 <Button
                   variant={'link'}
-                  className={cn(pathname === '/dashboard' ? 'underline' : '')}
+                  className={cn(pathname === '/dashboard' ? 'underline cursor-pointer' : 'cursor-pointer')}
                 >
                   Ver Estatísticas de Leitura
                 </Button>
               </Link>
+
             </nav>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -131,6 +134,11 @@ export default function Navbar({ userName, id }: { userName: string | null | und
                 </Button>
               </Link>
             </nav>
+            <Link href={'/login'}>
+              <Button variant={'link'} onClick={() => signOut({ callbackUrl: '/login' })}>
+                Encerrar Sessão
+              </Button>
+            </Link>
           </CollapsibleContent>
         </Collapsible>
       </div>
