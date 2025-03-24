@@ -69,11 +69,12 @@ export default function RegisterForm() {
             }
 
         } catch (error: any) {
-            console.log(error);
-            setMessage({
-                success: false,
-                message: error.response?.data?.message || "Erro ao registrar. Tente novamente.",
-            });
+            if (axios.isAxiosError(error)) {
+                setMessage({
+                    success: false,
+                    message: error.response?.data?.message || "Erro ao registrar. Tente novamente.",
+                });
+            }
         } finally {
             setIsLoading(false);
         }

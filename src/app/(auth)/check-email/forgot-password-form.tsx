@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { AlertMessage } from "@/components/alertMessage";
 import { forgotPasswrodInputs, forgotPasswrodSchema } from "./schema";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export function ForgotPasswordForm() {
     const [message, setMessage] = useState<{ success: boolean; message: string } | null>(null);
@@ -36,12 +36,14 @@ export function ForgotPasswordForm() {
 
             setMessage({ success: true, message: "Link de recuperação enviado com sucesso! Verifique seu e-mail." });
             form.reset();
-        } catch (error: any) {
-            console.error(error);
-            setMessage({
-                success: false,
-                message: error.response?.data?.message || "Erro ao enviar o link de recuperação. Tente novamente.",
-            });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setMessage({
+                    success: false,
+                    message: error.response?.data?.message || "Erro ao enviar o link de recuperação. Tente novamente.",
+                });
+            }
+
         } finally {
             setIsLoading(false);
         }

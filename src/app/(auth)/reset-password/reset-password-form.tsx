@@ -15,7 +15,7 @@ export function ResetPasswordForm() {
     const [message, setMessage] = useState<{ success: boolean; message: string } | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const searchParams = useSearchParams();
-    const token = searchParams.get("token"); // Obtém o token da URL
+    const token = searchParams.get("token");
 
     const form = useForm<ResetPasswordInputs>({
         resolver: zodResolver(resetPasswordSchema),
@@ -28,7 +28,6 @@ export function ResetPasswordForm() {
     const onSubmit = async (data: ResetPasswordInputs) => {
         setIsLoading(true);
         try {
-            // Envia a nova senha e o token para a API
             const response = await axios.post("/api/reset-password", {
                 token,
                 newPassword: data.newPassword,
@@ -37,17 +36,16 @@ export function ResetPasswordForm() {
             if (response.status !== 200) {
                 throw new Error("Erro ao redefinir a senha.");
             }
-
-            // Exibe uma mensagem de sucesso
             setMessage({ success: true, message: "Senha redefinida com sucesso!" });
-            form.reset(); // Limpa o formulário após a redefinição
+            form.reset();
         } catch (error: any) {
-            console.error(error);
-            // Exibe uma mensagem de erro
-            setMessage({
-                success: false,
-                message: error.response?.data?.message || "Erro ao redefinir a senha. Tente novamente.",
-            });
+            if (axios.isAxiosError(error)) {
+                setMessage({
+                    success: false,
+                    message: error.response?.data?.message || "Erro ao redefinir a senha. Tente novamente.",
+                });
+            }
+
         } finally {
             setIsLoading(false);
         }

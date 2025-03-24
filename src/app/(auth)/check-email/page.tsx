@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { ForgotPasswordForm } from "./forgot-password-form";
 import Link from "next/link";

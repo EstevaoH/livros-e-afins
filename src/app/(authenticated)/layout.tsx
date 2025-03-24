@@ -1,6 +1,5 @@
 import Navbar from "@/components/navBar";
 import { getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { authOptions } from "../../../auth";
 import { ThemeProvider } from "@/components/theme-provider";

@@ -1,3 +1,4 @@
+//@typescript-eslint/no-unused-vars
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import { FormLoginInputs, formLoginSchema } from "./schema";
 import { useRouter } from "next/navigation";
 import { AlertMessage } from "@/components/alertMessage";
 import { signIn } from "next-auth/react";
+import axios from "axios";
 
 export function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -44,11 +46,13 @@ export function LoginForm() {
             }
             router.push("/dashboard");
         } catch (error: any) {
-            console.error("Erro ao fazer login:", error);
-            setMessage({
-                success: false,
-                message: error.response?.data?.message || "Erro ao autenticar. Tente novamente.",
-            });
+            if (axios.isAxiosError(error)) {
+                setMessage({
+                    success: false,
+                    message: error.response?.data?.message || "Erro ao autenticar. Tente novamente.",
+                });
+            }
+
         } finally {
             setIsLoading(false);
         }
