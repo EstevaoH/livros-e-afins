@@ -12,10 +12,11 @@ import { Button } from "@/components/ui/button"
 
 interface BookCardProps {
     book: Book;
-    onStartReading: (book: Book) => void
+    onStartReading: (book: Book) => void;
+    onDetailsBook: (book: Book) => void;
 }
 
-export default function BookCard({ book, onStartReading }: BookCardProps) {
+export default function BookCard({ book, onStartReading, onDetailsBook }: BookCardProps) {
     const [libraryBooks, setLibraryBooks] = useState<Book[]>([]);
     const renderMyRating = () => {
         const stars = []
@@ -187,7 +188,7 @@ export default function BookCard({ book, onStartReading }: BookCardProps) {
     const getActionButton = () => {
         switch (book.status) {
             case "read":
-                return <Button onClick={() => onStartReading(book)} type="submit" variant={"outline"} className="w-full">Ver detalhes</Button>
+                return <Button onClick={() => onDetailsBook(book)} type="submit" variant={"outline"} className="w-full">Ver detalhes</Button>
             case "reading":
                 return <UpdateReadingModal book={book} onUpdateProgress={handleUpdateProgress} />
             case "to-read":

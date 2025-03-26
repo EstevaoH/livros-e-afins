@@ -1,10 +1,13 @@
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { ForgotPasswordForm } from "./forgot-password-form";
 import Link from "next/link";
+import Image from "next/image"
+import Logo from "../../../../public/logo.png"
 
 export default function CheckEmailPage() {
     return (
         <>
+            <Image src={Logo} alt='' width={300} height={300} />
             <Card className="max-w-sm w-full rounded-2xl mt-12">
                 <CardHeader>
                     <h2 className="text-xl font-bold">Recuperação de Senha</h2>

@@ -1,4 +1,5 @@
 export type ReadingStatus = "read" | "reading" | "to-read"
+export type BookPriority = "alta" | "média" | "baixa"
 export interface BookRequest {
     title: string;
     author: string;

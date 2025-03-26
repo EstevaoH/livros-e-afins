@@ -10,6 +10,7 @@ import { AlertMessage } from "@/components/alertMessage";
 import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import { Loader } from "lucide-react";
 
 export function ResetPasswordForm() {
     const [message, setMessage] = useState<{ success: boolean; message: string } | null>(null);
@@ -96,7 +97,7 @@ export function ResetPasswordForm() {
                         )}
                     />
                     <Button type="submit" disabled={isLoading} className="w-full">
-                        {isLoading ? "Redefinindo..." : "Redefinir Senha"}
+                        {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : "Redefinir Senha"}
                     </Button>
                 </form>
             </Form>

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -43,7 +43,7 @@ export function LoginForm() {
                     })
                 }
             }
-            router.push("/dashboard");
+            router.push("/my-library");
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setMessage({
@@ -114,8 +114,8 @@ export function LoginForm() {
                         </Link>
                     </p>
                     <div>
-                        <Button className="w-full mt-6" type="submit">
-                            Entrar
+                        <Button disabled={isLoading} className="w-full mt-6" type="submit">
+                            {isLoading ? <Loader  className="h-4 w-4 animate-spin" /> : "Entrar"}
                         </Button>
                     </div>
                 </form>

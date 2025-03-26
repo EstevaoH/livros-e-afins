@@ -9,9 +9,10 @@ interface BookListProps {
   books: Book[]
   status: string
   onStartReading: (book: Book) => void
+  onDetailsBook: (book: Book) => void;
 }
 
-export default function BookList({ books, status,onStartReading }: BookListProps) {
+export default function BookList({ books, status,onStartReading, onDetailsBook }: BookListProps) {
   const [sortBy, setSortBy] = useState<string>(getSortDefault(status))
 
   function getSortDefault(status: string): string {
@@ -124,7 +125,7 @@ export default function BookList({ books, status,onStartReading }: BookListProps
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {sortedBooks.map((book) => (
-          <BookCard key={book.id} book={book} onStartReading={onStartReading} />
+          <BookCard key={book.id} book={book} onStartReading={onStartReading} onDetailsBook={onDetailsBook} />
         ))}
       </div>
     </div>

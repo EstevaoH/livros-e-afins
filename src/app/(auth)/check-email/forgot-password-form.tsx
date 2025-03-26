@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { AlertMessage } from "@/components/alertMessage";
 import { forgotPasswrodInputs, forgotPasswrodSchema } from "./schema";
 import axios from "axios";
+import { Loader } from "lucide-react";
 
 export function ForgotPasswordForm() {
     const [message, setMessage] = useState<{ success: boolean; message: string } | null>(null);
@@ -82,7 +83,7 @@ export function ForgotPasswordForm() {
                     />
                     <div>
                         <Button className="w-full mt-6" type="submit" disabled={isLoading}>
-                            {isLoading ? "Enviando..." : "Enviar link de Recuperação"}
+                            {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : "Enviar link de Recuperação"}
                         </Button>
                     </div>
                 </form>

@@ -15,7 +15,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { formRegisterInputs, formRegisterSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader } from 'lucide-react';
 import axios from "axios";
 import { AlertMessage } from '@/components/alertMessage';
 import { useRouter } from 'next/navigation';
@@ -212,7 +212,7 @@ export default function RegisterForm() {
                         )}
                     />
                     <Button disabled={isLoading} className="w-full mt-6" type="submit">
-                        {isLoading ? "Registrando..." : "Registrar"}
+                        {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : "Registrar"}
                     </Button>
                 </form>
             </Form>

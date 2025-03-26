@@ -6,11 +6,13 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 import RegisterForm from './register-form';
-
+import Logo from "../../../../public/logo.png"
+import Image from "next/image"
 
 export default function RegisterPage() {
     return (
         <>
+            <Image src={Logo} alt='' width={300} height={300} />
             <Card className="max-w-lg w-full rounded-2xl mt-12">
                 <CardHeader>
                     <h2 className="text-xl font-bold">Cadastre-se</h2>
