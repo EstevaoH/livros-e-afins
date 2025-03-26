@@ -48,31 +48,69 @@ export async function POST(request: Request) {
                 daysToRead = null;
                 return NextResponse.json(
                     { success: false, message: "A data de término não pode ser anterior à data de início." },
-                    { status: 500 }
+                    { status: 400 }
                 );
             }
         }
-        let progressCurrent = null
-        if (currentPages) {
-            const progress = Math.round((currentPages / pages) * 100);
-            if (progress >= 0) {
-                progressCurrent = progress
-
-            } else {
-                progressCurrent = null
+        let progressCurrent = null;
+        if (currentPages !== undefined && currentPages !== null) {
+            if (pages <= 0) {
                 return NextResponse.json(
-                    { success: false, message: "O progresso não pode ser  abaixo de 0" },
-                    { status: 500 }
+                    {
+                        success: false,
+                        message: "O número total de páginas deve ser maior que zero."
+                    },
+                    { status: 400 }
                 );
             }
+
+            if (currentPages < 0) {
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: "O progresso não pode ser menor que 0."
+                    },
+                    { status: 400 }
+                );
+            }
+
+            if (currentPages > pages) {
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: "A página atual não pode ser maior que o total de páginas."
+                    },
+                    { status: 400 }
+                );
+            }
+
+            progressCurrent = Math.round((currentPages / pages) * 100);
         }
-        let currentPage = null
+        let currentPage = currentPages;
         if (status === 'read') {
             progressCurrent = 100;
-            currentPage = pages
-        } else {
-            currentPage = currentPages
+            currentPage = pages;
         }
+
+        const existingBook = await db.book.findFirst({
+            where: {
+                isbn,
+                userId: session.user.id
+            }
+        });
+
+        if (existingBook) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Você já registrou este livro anteriormente."
+                },
+                { status: 409 }
+            );
+        }
+
+
+
         const book = await db.book.create({
             data: {
                 title,
